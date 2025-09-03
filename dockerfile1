@@ -1,0 +1,23 @@
+
+FROM python:3.9-slim
+
+# Prevent interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Set work directory
+WORKDIR /app
+
+# Copy requirement file
+COPY requirement.txt .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirement.txt
+
+# Copy project files
+COPY . .
+
+# Expose port
+EXPOSE 8000
+
+# Run API with uvicorn
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
